@@ -1,0 +1,4 @@
+use post/windows/manage/migrate
+set NAME iexplore.exe
+run
+run post/windows/gather/checkvm
