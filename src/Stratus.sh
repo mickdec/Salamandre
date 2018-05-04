@@ -120,30 +120,30 @@ service apache2 status
 
 echo -e "$g Starting the listener.. (this may take a while..)$w"
 cd rb
-if [ $payChoice = 0 ]; then
+if [ $payChoice = "0" ]; then
   exit 1
-elif [ $payChoice = 11 ]; then
+elif [ $payChoice = "11" ]; then
   cd windows
   msfconsole -r ListenWindowsPowerRevTCP.rb
-elif [ $payChoice = 12 ]; then
+elif [ $payChoice = "12" ]; then
   cd windows
   msfconsole -r ListenWindowsPowerBindTCP.rb
-elif [ $payChoice = 13 ]; then
+elif [ $payChoice = "13" ]; then
   cd windows
   msfconsole -r ListenWindowsShellRevTCP.rb
-elif [ $payChoice = 14 ]; then
+elif [ $payChoice = "14" ]; then
   cd windows
   msfconsole -r ListenWindowsShellBindTCP.rb
-elif [ $payChoice = 21 ]; then
+elif [ $payChoice = "21" ]; then
   cd linux
   msfconsole -r ListenLinuxShellRevTCP.rb
-elif [ $payChoice = 22 ]; then
+elif [ $payChoice = "22" ]; then
   cd linux
   msfconsole -r ListenLinuxShellBindTCP.rb
-elif [ $payChoice = 31 ]; then
+elif [ $payChoice = "31" ]; then
   cd android
   msfconsole -r ListenAndroRevTCP.rb
-elif [ $payChoice = 32 ]; then
+elif [ $payChoice = "32" ]; then
   cd android
   msfconsole -r ListenAndroBindTCP.rb
 fi
