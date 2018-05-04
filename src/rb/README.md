@@ -2,9 +2,17 @@
 <p>
 <h3>Rb repository :</h3>
 <ul>
-<li><h3>ListenWindowsMeterRevTCP.rb</h3>
+<li><h3>android</h3>
 <p>
-Listener for the Windows/meterpreter/reverse_tcp/ payload.
+All the listeners for Android.
+</p>
+<li><h3>linux</h3>
+<p>
+All the listeners for Linux.
+</p>
+<li><h3>windows</h3>
+<p>
+All the listeners for Windows.
 </p>
 </ul>
 </p>
