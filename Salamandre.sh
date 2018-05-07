@@ -4,6 +4,6 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 cd res/Veil/config
-./setup.sh
+./setup.sh --force --silent
 cd ../../../src
 ./Stratus.sh
