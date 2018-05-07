@@ -3,8 +3,7 @@
 <h2>REQUIREMENTS</h2>
 <ul>
 <li>1. a <a href="https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso">linux</a> system (preferably  <a href="https://www.kali.org/downloads/">kali</a>).
-<li>2. a <a href="https://www.metasploit.com/download">metasploit</a> facility (already in kali).
-<li>3. Veil Evasion for obfuscating payloads (already in kali but need to be upgraded).
+<li>2. Run Install.sh in the base project.
 </ul>
 <h2>DISCLAIMER</h2>
 <p><i>
@@ -19,14 +18,7 @@ This script let you choose a payload, create it with your local IP, launch an ap
 <p>
 <ul>
 <li> I need a solution for portforwarding a phone device. Since VoIP :)
-<li> HTML website is not created for now
 <li> All the payloads are not listed (need to implement a "custom choice")
 <li> Need to transfer data from .sh to .rb (or create a lot of .rb files)
-<li> I didn't have implemented verifications, if the script crash, you have to debug by yourself for now.
 </ul>
 </p>
-
-
-
-
-
